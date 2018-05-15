@@ -10,8 +10,8 @@ public class DataDriven {
 	public DataDriven() throws Exception {}
 	
 	static String path = System.getProperty("user.dir");
-	private static String separator = System.getProperty("file.separator");
-	private static final File dataDrivenFile = new File(path + separator + "src" + separator + "test" + separator + "resources" + separator + "MassaDeDados.xlsx");
+	public static String separator = System.getProperty("file.separator");
+	private static final File dataDrivenFile = new File(path + separator + "src" + separator + "test" + separator + "resources" + separator + "dataDriven.xlsx");
 
 	FileInputStream dataDriven = new FileInputStream(dataDrivenFile);
 	XSSFWorkbook dados = new XSSFWorkbook(dataDriven);
@@ -21,7 +21,23 @@ public class DataDriven {
 	 */
 
 	public String getLink() {
-		return dados.getSheet("Massa").getRow(0).getCell(1).getStringCellValue();
+		return dados.getSheet("Login").getRow(0).getCell(1).getStringCellValue();
+	}
+	
+	public String getEmailValido() {
+		return dados.getSheet("Login").getRow(1).getCell(1).getStringCellValue();
+	}
+	
+	public String getSenhaValida() {
+		return dados.getSheet("Login").getRow(2).getCell(1).getStringCellValue();
+	}
+	
+	public String getEmailInvalido() {
+		return dados.getSheet("Login").getRow(3).getCell(1).getStringCellValue();
+	}
+	
+	public String getEmailContaInexistente() {
+		return dados.getSheet("Login").getRow(4).getCell(1).getStringCellValue();
 	}
 
 }
