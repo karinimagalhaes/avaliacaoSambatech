@@ -10,6 +10,7 @@ public class PaginaLogin extends PaginaBase{
 	}
 	
 	public void realizarLogin(String email, String password) {
+		waitElementsId("inputEmail");
 		getDriver().findElement(By.id("inputEmail")).sendKeys(email);
 		getDriver().findElement(By.id("inputPassword")).sendKeys(password);
 		getDriver().findElement(By.id("login")).click();

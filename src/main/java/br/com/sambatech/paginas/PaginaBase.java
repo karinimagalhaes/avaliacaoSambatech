@@ -16,8 +16,7 @@ public class PaginaBase {
 	}
 	
 	public PaginaBase(){
-		System.setProperty("webdriver.chrome.driver", 
-				"user.dir" + DataDriven.separator + "drivers" + DataDriven.separator + "chromedriver.exe");
+		System.setProperty("webdriver.chrome.driver",  "drivers" + DataDriven.separator + "chromedriver.exe");
 		this.driver = new ChromeDriver();
 	}
 	
@@ -25,8 +24,8 @@ public class PaginaBase {
 		return driver;
 	}
 	
-	public void acessoUrl(String url){
-		getDriver().navigate().to(url);
+	public void acessoUrl(){
+		getDriver().navigate().to("http://web1.qa.sambatech.com:10000");
 	}
 	
 	public void closeDriver(){
@@ -36,5 +35,15 @@ public class PaginaBase {
 	public void waitElementsId(String id){
 		WebDriverWait wait = new WebDriverWait(getDriver(), 300);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(id)));
+	}
+	
+	public void waitElementsClass(String className){
+		WebDriverWait wait = new WebDriverWait(getDriver(), 300);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className(className)));
+	}
+	
+	public void waitElementsXpath(String xpath){
+		WebDriverWait wait = new WebDriverWait(getDriver(), 300);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
 	}
 }
