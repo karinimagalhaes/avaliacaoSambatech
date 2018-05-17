@@ -11,6 +11,11 @@ import br.com.sambatech.Paginas.PaginaBase;
 import br.com.sambatech.Paginas.PaginaDashboard;
 import br.com.sambatech.Paginas.PaginaLogin;
 
+/**
+ * Classe de teste com os fluxos do cadastro de projeto
+ * @author MagalhaK
+ *
+ */
 public class CadastroProjetoTest {
 
 	WebDriver driver;
@@ -29,30 +34,48 @@ public class CadastroProjetoTest {
 		paginaBase.acessoUrl();
 	}
 	
+	
+	/**
+	 * Teste referente a Issue #8 cadastrada no gitHub
+	 */
+	
 	@Test
 	public void cadastrarNovoProjetoTest() {
 		paginaLogin.realizarLogin("avaliacao_qa_samba@sambatech.com.br", "123456789");
 		paginaDashboard = new PaginaDashboard(driver);
 		paginaDashboard.createProject("Teste Notificação", "Teste da notificação após cadastrar projeto");
 		paginaDashboard.alterarProjeto("Teste Notificação");
+		
+		// Validação da quatidade de notificações exibidas no balão após cadastrar um projeto
 		Assert.assertEquals("0", paginaDashboard.getNumNotificacoes());
-		//Assert.assertEquals("Automação Project", projectName);
 	}
 	
+	
+	/**
+	 * Teste do cadastro de um projeto que já está na aplicação
+	 */
 	@Test
 	public void cadastrarProjetoDuplicadoTest() {
 		paginaLogin.realizarLogin("avaliacao_qa_samba@sambatech.com.br", "123456789");
 		paginaDashboard = new PaginaDashboard(driver);
 		paginaDashboard.createProject("QA Samba", "Projeto cadastrado pelo teste automatizado");
+		
+		// Validação da mensagem de erro exibida para o usuário
 		String messageError = paginaDashboard.getDriver().findElement(By.xpath("//*[@id='modalContainer']/div/div[2]/form/div[1]/span")).getText();
 		Assert.assertEquals("Ops! Já existe esse nome de projeto na sua conta. Por favor insira outro", messageError);
 	}
 	
+	
+	/**
+	 * Teste para validar o cadastro de projeto sem os campos preenchidos
+	 */
 	@Test
 	public void campoObrigatorioNomeProjetoTest() {
 		paginaLogin.realizarLogin("avaliacao_qa_samba@sambatech.com.br", "123456789");
 		paginaDashboard = new PaginaDashboard(driver);
 		paginaDashboard.createProject("", "");
+		
+		// validação da mensagem de erro de campo obrigatório
 		String messageError = paginaDashboard.getDriver().findElement(By.xpath("//*[@id='modalContainer']/div/div[2]/form/div[1]/span")).getText();
 		Assert.assertEquals("Por favor insira um nome para o projeto", messageError);
 	}
