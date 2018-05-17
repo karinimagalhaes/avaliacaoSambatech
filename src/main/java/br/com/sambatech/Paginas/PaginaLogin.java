@@ -1,4 +1,4 @@
-package br.com.sambatech.paginas;
+package br.com.sambatech.Paginas;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;

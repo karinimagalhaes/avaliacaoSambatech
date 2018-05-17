@@ -1,4 +1,4 @@
-package br.com.sambatech.paginas;
+package br.com.sambatech.Paginas;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -6,18 +6,19 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import br.com.sambatech.util.DataDriven;
-
 public class PaginaBase {
-	WebDriver driver;
+	private WebDriver driver;
+	
+	public static String separator = System.getProperty("file.separator");
 	
 	public PaginaBase(WebDriver driver){
 		this.driver = driver;
 	}
 	
 	public PaginaBase(){
-		System.setProperty("webdriver.chrome.driver",  "drivers" + DataDriven.separator + "chromedriver.exe");
+		System.setProperty("webdriver.chrome.driver",  "drivers" + separator + "chromedriver.exe");
 		this.driver = new ChromeDriver();
+		this.driver.manage().window().maximize();
 	}
 	
 	public WebDriver getDriver(){
@@ -33,7 +34,7 @@ public class PaginaBase {
 	}
 	
 	public void waitElementsId(String id){
-		WebDriverWait wait = new WebDriverWait(getDriver(), 300);
+		WebDriverWait wait = new WebDriverWait(getDriver(), 400);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(id)));
 	}
 	

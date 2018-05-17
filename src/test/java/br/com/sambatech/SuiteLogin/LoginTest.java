@@ -1,25 +1,22 @@
 package br.com.sambatech.SuiteLogin;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-import br.com.sambatech.paginas.PaginaBase;
-import br.com.sambatech.paginas.PaginaLogin;
-import br.com.sambatech.util.DataDriven;
+import br.com.sambatech.Paginas.PaginaBase;
+import br.com.sambatech.Paginas.PaginaLogin;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-
-public class LoginValidoTest {
-
+public class LoginTest {
+	
 	WebDriver driver;
 	private PaginaBase paginaBase;
 	private PaginaLogin paginaLogin;
-	private DataDriven dataDriven;
 	
-	public LoginValidoTest() {
+	public LoginTest() {
 		this.paginaBase = new PaginaBase();			
 		this.driver = paginaBase.getDriver();		
 		this.paginaLogin = new PaginaLogin(driver);	
@@ -48,4 +45,5 @@ public class LoginValidoTest {
 	public void closeDriver() {
 		paginaBase.closeDriver();
 	}
+
 }
