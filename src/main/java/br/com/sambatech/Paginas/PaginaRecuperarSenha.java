@@ -15,8 +15,8 @@ public class PaginaRecuperarSenha extends PaginaBase {
 	}
 	
 	public void recuperarSenha(String email) {
-		waitElementsId("email");
-		getDriver().findElement(By.id("email")).sendKeys(email);
+		waitElementsName("email");
+		getDriver().findElement(By.name("email")).sendKeys(email);
 		getDriver().findElement(By.xpath("//*[@id='type-email']/div[2]/div[1]/button")).click();
 	}
 }

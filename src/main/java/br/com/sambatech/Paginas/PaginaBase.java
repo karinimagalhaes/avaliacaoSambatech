@@ -47,4 +47,9 @@ public class PaginaBase {
 		WebDriverWait wait = new WebDriverWait(getDriver(), 300);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
 	}
+	
+	public void waitElementsName(String name){
+		WebDriverWait wait = new WebDriverWait(getDriver(), 300);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.name(name)));
+	}
 }

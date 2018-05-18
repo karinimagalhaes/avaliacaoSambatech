@@ -1,5 +1,7 @@
 package br.com.sambatech.SuiteDashboard;
 
+import java.io.IOException;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -10,6 +12,7 @@ import org.openqa.selenium.WebDriver;
 import br.com.sambatech.Paginas.PaginaBase;
 import br.com.sambatech.Paginas.PaginaDashboard;
 import br.com.sambatech.Paginas.PaginaLogin;
+import br.com.sambatech.Util.DataDriven;
 
 /**
  * Classe de teste com os fluxos do cadastro de projeto
@@ -22,11 +25,13 @@ public class CadastroProjetoTest {
 	private PaginaBase paginaBase;
 	private PaginaLogin paginaLogin;
 	private PaginaDashboard paginaDashboard;
+	private DataDriven dataDriven;
 	
-	public CadastroProjetoTest() {
+	public CadastroProjetoTest() throws IOException {
 		this.paginaBase = new PaginaBase();
 		this.driver = paginaBase.getDriver();
-		this.paginaLogin = new PaginaLogin(driver);		
+		this.paginaLogin = new PaginaLogin(driver);	
+		this.dataDriven = new DataDriven();
 	}
 	
 	@Before
@@ -41,10 +46,10 @@ public class CadastroProjetoTest {
 	
 	@Test
 	public void cadastrarNovoProjetoTest() {
-		paginaLogin.realizarLogin("avaliacao_qa_samba@sambatech.com.br", "123456789");
+		paginaLogin.realizarLogin(dataDriven.getLoginValido(), dataDriven.getSenhaValida());
 		paginaDashboard = new PaginaDashboard(driver);
-		paginaDashboard.createProject("Teste Notificação", "Teste da notificação após cadastrar projeto");
-		paginaDashboard.alterarProjeto("Teste Notificação");
+		paginaDashboard.createProject(dataDriven.getNomeProjetoNotificacao(), dataDriven.getDescricaoNotificacao());
+		paginaDashboard.alterarProjeto(dataDriven.getNomeProjetoNotificacao());
 		
 		// Validação da quatidade de notificações exibidas no balão após cadastrar um projeto
 		Assert.assertEquals("0", paginaDashboard.getNumNotificacoes());
@@ -56,9 +61,9 @@ public class CadastroProjetoTest {
 	 */
 	@Test
 	public void cadastrarProjetoDuplicadoTest() {
-		paginaLogin.realizarLogin("avaliacao_qa_samba@sambatech.com.br", "123456789");
+		paginaLogin.realizarLogin(dataDriven.getLoginValido(), dataDriven.getSenhaValida());
 		paginaDashboard = new PaginaDashboard(driver);
-		paginaDashboard.createProject("QA Samba", "Projeto cadastrado pelo teste automatizado");
+		paginaDashboard.createProject(dataDriven.getNomeProjetoDuplicado(), dataDriven.getNomeProjetoDuplicado());
 		
 		// Validação da mensagem de erro exibida para o usuário
 		String messageError = paginaDashboard.getDriver().findElement(By.xpath("//*[@id='modalContainer']/div/div[2]/form/div[1]/span")).getText();
@@ -71,7 +76,7 @@ public class CadastroProjetoTest {
 	 */
 	@Test
 	public void campoObrigatorioNomeProjetoTest() {
-		paginaLogin.realizarLogin("avaliacao_qa_samba@sambatech.com.br", "123456789");
+		paginaLogin.realizarLogin(dataDriven.getLoginValido(), dataDriven.getSenhaValida());
 		paginaDashboard = new PaginaDashboard(driver);
 		paginaDashboard.createProject("", "");
 		

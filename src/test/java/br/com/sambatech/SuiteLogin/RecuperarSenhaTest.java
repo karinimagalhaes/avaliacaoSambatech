@@ -6,6 +6,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 import br.com.sambatech.Paginas.PaginaBase;
@@ -37,22 +38,25 @@ public class RecuperarSenhaTest {
 	@Test
 	public void contaValidaTest() {
 		paginaRecuperarSenha.linkRecuperarSenha();
-		paginaRecuperarSenha.recuperarSenha("");
+		paginaRecuperarSenha.recuperarSenha(dataDriven.getLoginValido());
 		
 		// Validação do usuário exibido ao acessar a aplicação
-		Assert.assertEquals("","");
+		paginaBase.waitElementsXpath("//*[@id='main-wrapper']/div/div[2]/div[2]/strong");
+		Assert.assertEquals(" We sent you an email with all instructions to obtain your new password.\r\n" + 
+				"			", paginaBase.getDriver().findElement(By.xpath("//*[@id='main-wrapper']/div/div[2]/div[2]/strong")).getText() + paginaBase.getDriver().findElement(By.xpath("//*[@id='main-wrapper']/div/div[2]/div[2]")).getText());
 	}
 	
 	/**
-	 * Teste recuperação de senha informando e-mail com formati inválido
+	 * Teste recuperação de senha informando e-mail com formato inválido
 	 */
 	@Test
 	public void emailFormatoInvalidoTest() {
 		paginaRecuperarSenha.linkRecuperarSenha();
-		paginaRecuperarSenha.recuperarSenha("");
+		paginaRecuperarSenha.recuperarSenha(dataDriven.getEmailInvalido());
 		
 		// Validação do usuário exibido ao acessar a aplicação
-		Assert.assertEquals("","");
+		paginaBase.waitElementsXpath("//*[@id='main-wrapper']/div/div[2]/div[3]/span");
+		Assert.assertEquals("Please insert a valid email", paginaBase.getDriver().findElement(By.xpath("//*[@id='main-wrapper']/div/div[2]/div[3]/span")).toString());
 		
 	}
 	
@@ -62,10 +66,11 @@ public class RecuperarSenhaTest {
 	@Test
 	public void contaInexistenteTest() {
 		paginaRecuperarSenha.linkRecuperarSenha();
-		paginaRecuperarSenha.recuperarSenha("");
+		paginaRecuperarSenha.recuperarSenha(dataDriven.getContaInexistente());
 		
 		// Validação do usuário exibido ao acessar a aplicação
-		Assert.assertEquals("","");
+		paginaBase.waitElementsXpath("//*[@id='main-wrapper']/div/div[2]/div[3]/span");
+		Assert.assertEquals("Ops! The email was not found in our system. Please try again.",paginaBase.getDriver().findElement(By.xpath("//*[@id='main-wrapper']/div/div[2]/div[3]/span")).toString());
 		
 	}
 	

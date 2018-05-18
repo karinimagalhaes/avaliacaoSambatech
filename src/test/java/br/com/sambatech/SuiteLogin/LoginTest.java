@@ -55,13 +55,24 @@ public class LoginTest {
 	 */
 	@Test
 	public void loginInvalidoTest() {
-		paginaLogin.realizarLogin(dataDriven.getLoginValido(), dataDriven.getSenhaValida());
+		paginaLogin.realizarLogin(dataDriven.getEmailInvalido(), dataDriven.getSenhaInvalida());
 		paginaBase.waitElementsClass("dropdown-toggle");
 		
 		// Validação do usuário exibido ao acessar a aplicação
-		Assert.assertEquals(paginaBase.getDriver().findElement(By.xpath("//*[@class='dropdown-toggle']/span")).getText(), "Avaliação QA");
+		Assert.assertEquals(paginaBase.getDriver().findElement(By.id("password_incorrect")).getText(), "Incorrect email or password. ");
 	}
 	
+	/**
+	 * Teste de login com conta inexistente
+	 */
+	@Test
+	public void loginContaInexistenteTest() {
+		paginaLogin.realizarLogin(dataDriven.getContaInexistente(), dataDriven.getSenhaValida());
+		paginaBase.waitElementsClass("dropdown-toggle");
+		
+		// Validação do usuário exibido ao acessar a aplicação
+		Assert.assertEquals(paginaBase.getDriver().findElement(By.id("password_incorrect")).getText(), "Incorrect email or password. ");
+	}
 	
 	
 	@After
