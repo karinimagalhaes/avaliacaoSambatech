@@ -22,5 +22,7 @@ Estrutura:
 * arquivos: armazenam arquivos variados.
 * drivers: armazenam os drivers de execução.
 
+Execução:
 
+Os testes podem ser executados via maven (mvn clean test -Dtests="RunAllTests") ou via Junit acessando br.com.sambatech.Util > RunAllTests.
 
